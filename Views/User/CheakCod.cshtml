@@ -1,0 +1,33 @@
+﻿@model Web_Music_v3.Models.Helper.Code
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Web Music</title>
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/Auth/siteAuth.css" asp-append-version="true" />
+</head>
+
+<body>
+    <form method="get" asp-controller="User">
+        <div class="auth">
+            <div class="window">
+                <div class="logoauth__title">
+                    <div>ВОССТАНОВЛЕНИЕ ПАРОЛЯ</div>
+                </div>
+                <input asp-for="Cod_1" type="hidden">
+                <input asp-for="Cod" type="number" class="input__data" runat="server" placeholder="Код" required>
+                <p style="color:red">@Html.ValidationMessage("error")</p>
+
+                <div class="btn">
+                    <input asp-action="CheakCod" type="submit" value="Проверить" class="btn__entrance" />
+                </div>
+            </div>
+        </div>
+    </form>
+</body>
+</html>

@@ -1,0 +1,79 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title> Web Music</title>
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/search.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/_Leyout.css" asp-append-version="true" />
+    <script src="~/lib/jquery/dist/jquery.js"></script>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.min.js"></script>
+</head>
+<body>
+    <header>
+        <div class="container">
+
+            <div class="header__info">
+                <div class="logo__title">Web Music</div>
+                <div>
+                    @if ((User.IsInRole("Admin") || User.IsInRole("User")) && User.Identity.IsAuthenticated)
+                    {
+                        <div class="btn__menu">                                                      
+                            <a href="@Url.Action("List","Track")" class="btn__click">Главная</a>
+                            <a href="@Url.Action("List","PlaylistUser")" class="btn__click">Моя музыка</a>
+                            <div class="dropdown">
+                                <a class="btn__click">Альбомы</a>
+                                <div class="dropdown-content">
+                                    <a href="@Url.Action("List","AlbumUser")">Мои альбомы</a>
+                                    <a href="@Url.Action("List","Album")">Все альбомы</a>
+                                </div>
+                            </div>
+                            <div class="dropdown">
+                                <a class="user_name">@User.Identity.Name</a>
+                                <div class="dropdown-content">
+                                    <a href="@Url.Action("Exit","User")">Выход</a>
+                                </div>
+                            </div>
+                            @if (User.IsInRole("Admin"))
+                            {
+                                <div class="dropdown">
+                                    <a href="#" style="overflow: hidden;" class="btn__click">Кб. Админ.</a>
+                                    <div class="dropdown-content">
+                                        <a href="@Url.Action("EditFlowTrackView","Admin")">Редактировать поток</a>
+                                        <a href="@Url.Action("AddTrackView","Admin")">Добавить трек в поток</a>
+                                    </div>
+                                </div>
+                            }
+                        </div>
+                    }
+                </div>
+            </div>
+            @* @if (User.Identity.IsAuthenticated)
+            {
+                <div>
+                    <div class="container">
+                        <div class="search__info">
+                            <form style="display:flex">
+                                <div class="seach">
+                                    <input name="_search" asp-area="search" type="text" class="input__data__search" placeholder="Поиск" />
+                                    <input name="url" type="hidden" value="@Context.Request.Path">
+                                </div>
+                                <input asp-controller="Track" asp-action="Search" type="submit" value="🔍" class="btn__search" />
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            } *@
+        </div>
+    </header>
+    <div class="container">
+        <main role="main" class="pb-3">
+            @RenderBody()
+        </main>
+    </div>    
+</body>
+</html>
+

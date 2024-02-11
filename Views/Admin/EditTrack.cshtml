@@ -1,0 +1,41 @@
+﻿@using Web_Music_v3.Models
+@model Track
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Web Music</title>
+    <link rel="stylesheet" href="~/css/Admin/siteTrackEdit.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+</head>
+
+<body>
+    <div>
+        <div class="container">
+            <form>
+                <div class="cont">
+                    <div class="window__editTrack">
+                        <div class="title__logo">
+                            <div>РЕДАКТИРОВАТЬ ТРЕК</div>
+                        </div>
+
+                        <input asp-for="@Model.Id" type="hidden" />
+                        <input asp-for="@Model.Path_File" type="hidden" />
+
+                        <input asp-for="@Model.Title" type="text" class="input__data" placeholder="Наименование">
+                        <input asp-for="@Model.Author" type="text" class="input__data" placeholder="Автор">                        
+                        <p style="color:red">@Html.ValidationMessage("error")</p>
+                        <input asp-controller="Admin" asp-action="TrackEdit" class="btn__saveTrack" type="submit" value="Сохранить" />
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</body>
+
+</html>
+

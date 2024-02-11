@@ -1,0 +1,41 @@
+﻿@using Web_Music_v3.Models
+@model Track
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Web Music</title>
+    <link rel="stylesheet" href="~/css/Admin/siteTrackAdd.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+</head>
+
+<body>
+    <div class="container">
+        <form>
+            <div class="cont">
+                <div class="window__addTrack">
+                    <div class="title__logo">
+                        <div>ДОБАВИТЬ ТРЕК</div>
+                    </div>
+                   
+                    <input asp-for="Title" type="text" class="input__data" placeholder="Наименование" required>                    
+
+                    <input asp-for="Author" type="text" class="input__data" placeholder="Автор" required>
+
+                    <input asp-for="Path_File" type="file" accept="audio/*" class="input__data" placeholder="Файл" required>
+                    <p style="color:red">@Html.ValidationMessage("error")</p>
+
+                    <input asp-controller="Admin" asp-action="AddTrack" class="btn__addTrack" type="submit" value="Добавить" />
+                </div>
+            </div>
+        </form>
+    </div>
+    <script>
+    </script>
+</body>
+</html>
+

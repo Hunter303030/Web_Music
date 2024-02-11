@@ -1,0 +1,90 @@
+﻿@using Web_Music_v3.Models.Helper
+@model TracksAlbumUser
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Web Music</title>
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/search.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/Track/siteTrackList.css" asp-append-version="true" />
+    <script src="~/lib/jquery/dist/jquery.js"></script>
+</head>
+
+<body>
+
+    <div>
+        <div class="container">
+            <div class="search__info">
+                <form style="display:flex">
+                    <div class="seach">
+                        <input name="search" asp-area="search" type="text" class="input__data__search" placeholder="Поиск" />                        
+                    </div>
+                    <input asp-controller="Track" asp-action="Search" type="submit" value="🔍" class="btn__search" />
+                </form>
+            </div>
+        </div>
+    </div>
+
+    @foreach (var item in Model.Tracks)
+    {
+        <div>
+            <div class="container">
+                <div class="track__list">
+                    <div class="track__item">@item.Title</div>
+                    <div class="track__item">@item.Author</div>
+                    <div class="btn">
+                        <div class="track__item">
+                            <audio controls>
+                                <source src="@Url.Content(item.Path_File)" type="audio/mp3" />
+                            </audio>
+                        </div>
+                        <form>
+                            <input asp-for="@item.Id" type="hidden" name="trackId" />
+
+                            @{
+                                var cur = Model.PlaylistUsers.Where(x => x.Track_Id == item.Id).FirstOrDefault();
+                            }
+                            @if (cur != null)
+                            {
+                                <input asp-controller="PlaylistUser" asp-action="DeleteTrackUser" type="submit" value="✓" class="btn__edittrack" />
+                            }
+                            else
+                            {
+                                <input asp-controller="PlaylistUser" asp-action="AddTrackUser" type="submit" title="Добавить трек к себе" value="+" class="btn__edittrack" />
+                            }
+
+                            <div class="dropdown">
+                                <input type="submit" class="btn__edittrack" value="⋮">
+                                <div class="dropdown-content">
+                                    @foreach (var item_ in Model.AlbumUsers)
+                                    {
+                                        <a href="@Url.Action("AddTrackInAlbum","AlbumTrack", new {trackId = item.Id, albumId = item_.Album.Id})">@item_.Album.Title</a>
+                                    }
+                                </div>
+                            </div>                           
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</body>
+</html>
+<script>
+    $(function () {
+        $('audio').on('play', function () {
+            $('audio').addClass('stoped');
+            $(this).removeClass('stoped').addClass('playing');
+            $('.stoped').each(function () {
+                $(this).trigger('pause');
+                $(this)[0].currentTime = 0;
+            })
+        })
+    })
+</script>
+

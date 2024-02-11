@@ -1,0 +1,36 @@
+﻿.track__list {
+    display: flex;
+    justify-content: space-between;
+    background-color: #ffffff;
+    border-radius: 30px;
+    margin: 20px 0;
+    align-items: center;
+    padding: 10px 20px;
+}
+
+.track__edit {
+    width: 300px;
+}
+
+.btn {
+    display: flex;    
+    align-items:center;    
+}
+
+.btn__track {
+    margin-left: 20px;
+    width: 30px;
+    height: 30px;
+    font-size: 19px;
+    color: #ffffff;
+    background-color: black;
+    border-radius: 10px;
+    border: 0px solid #ffffff;
+    transition: color .6s linear;
+}
+
+    .btn__track:hover {
+        background-color: white;
+        color: black;
+        border: 2px solid black;
+    }

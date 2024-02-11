@@ -1,0 +1,49 @@
+﻿@model Web_Music_v3.Models.User
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Web Music</title>
+    <link rel="stylesheet" href="~/css/Site/site.css" asp-append-version="true"/>
+    <link rel="stylesheet" href="~/css/Auth/siteEdit.css" asp-append-version="true"/>
+</head>
+
+<body>
+    <header class="header">
+        <div class="container">
+            <form method="post" asp-controller="User">
+                <div class="auth">
+                    <div class="window">
+                        <div class="title_">
+                            <div>РЕДАКТИРОВАНИЕ</div>
+                        </div>
+                        <div class="input__info">
+
+                            <input asp-for="@Model.Id" type="hidden">
+                            <input asp-for="@Model.Password" type="hidden">
+
+                            <input asp-for="@Model.Login" type="text" class="input__data" placeholder="Логин">
+                            <span asp-validation-for="Login" class="text-danger"></span>
+                            
+                            <input asp-for="@Model.Email" type="text" class="input__data" placeholder="Почта">
+                            <span asp-validation-for="Email" class="text-danger"></span>
+
+                            @* <input asp-for="@Model.Username" type="text" class="input__data" placeholder="Никнейм">
+                            <span asp-validation-for="Username" class="text-danger"></span> *@
+                        </div>
+                        <div class="btn">
+                            <input asp-controller="User" asp-action="Edit" type="submit" value="Изменить" class="btn__entrance" />
+                            <input asp-controller="User" asp-action="BackMain" type="submit" value="Назад" class="btn__entrance" />
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </header>
+</body>
+</html>
+

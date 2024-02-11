@@ -1,0 +1,69 @@
+﻿@using Web_Music_v3.Models
+@model IEnumerable<Track>
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Web Music</title>
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/Track/siteTrackList.css" asp-append-version="true" />
+    <script src="~/lib/jquery/dist/jquery.js"></script>
+</head>
+
+<body>
+
+    <div>
+        <div class="container">
+            <div class="search__info">
+                <form style="display:flex">
+                    <div class="seach">
+                        <input name="search" asp-area="search" type="text" class="input__data__search" placeholder="Поиск" />
+                    </div>
+                    <input asp-controller="Admin" asp-action="Search" type="submit" value="🔍" class="btn__search" />
+                </form>
+            </div>
+        </div>
+    </div>
+
+    @foreach (var item in Model)
+    {
+        <div>
+            <div class="container">
+                <div class="track__list">
+                    <div class="track__item">@item.Title</div>
+                    <div class="track__item">@item.Author</div>
+                        <div class="track__item">
+                            <audio controls>
+                                <source src="@Url.Content(item.Path_File)" type="audio/mp3" />
+                            </audio>
+                        </div>
+                        <form>
+                            <input asp-for="@item.Id" type="hidden" name="trackId" />
+                    <div class="btn">
+                            <input asp-controller="Admin" asp-action="TrackDelete" type="submit" title="Удалить трек полностью" value="🗑" class="btn__edittrack" />
+                            <input asp-controller="Admin" asp-action="TrackEditView" type="submit" title="Редактировать трек" value="⋮" class="btn__edittrack" />
+                    </div>
+                        </form>
+                </div>
+            </div>
+        </div>
+    }
+</body>
+</html>
+<script>
+    $(function () {
+        $('audio').on('play', function () {
+            $('audio').addClass('stoped');
+            $(this).removeClass('stoped').addClass('playing');
+            $('.stoped').each(function () {
+                $(this).trigger('pause');
+                $(this)[0].currentTime = 0;
+            })
+        })
+    })
+</script>
+

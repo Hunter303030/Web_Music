@@ -1,0 +1,83 @@
+﻿@using Web_Music_v3.Models
+@model IEnumerable<PlaylistUser>
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Web Music</title>
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/Track/siteTrackList.css" asp-append-version="true" />
+    <script src="~/lib/jquery/dist/jquery.js"></script>
+</head>
+
+<body>
+
+    <div>
+        <div class="container">
+            <div class="search__info">
+                <form style="display:flex">
+                    <div class="seach">
+                        <input name="search" asp-area="search" type="text" class="input__data__search" placeholder="Поиск" />
+                    </div>
+                    <input asp-controller="PlaylistUser" asp-action="Search" type="submit" value="🔍" class="btn__search" />
+                </form>
+            </div>
+        </div>
+    </div>
+
+    @if(Model.Count() == 0)
+    {
+        <div>
+            <div class="container">
+                <div class="track__list">
+                    <div class="track__item">Список пуст</div>                    
+                </div>
+            </div>
+        </div>
+    }
+    else
+    {
+        @foreach (var item in Model)
+        {
+            <div>
+                <div class="container">
+                    <div class="track__list">
+                        <div class="track__item">@item.Track.Title</div>
+                        <div class="track__item">@item.Track.Author</div>
+                        <div class="btn">
+                            <div class="track__item">
+                                <audio controls>
+                                    <source src="@Url.Content(item.Track.Path_File)" type="audio/mp3" />
+                                </audio>
+                            </div>
+                            <form>
+                                <input asp-for="@item.Track_Id" type="hidden" name="trackId" />
+                                <input asp-controller="PlaylistUser" asp-action="DeleteTrackUser" type="submit" title="Удалить" value="🗑" class="btn__edittrack" />
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    }    
+</body>
+
+</html>
+<script>
+    $(function () {
+        $('audio').on('play', function () {
+            $('audio').addClass('stoped');
+            $(this).removeClass('stoped').addClass('playing');
+            $('.stoped').each(function () {
+                $(this).trigger('pause');
+                $(this)[0].currentTime = 0;
+            })
+        })
+    })
+</script>
+

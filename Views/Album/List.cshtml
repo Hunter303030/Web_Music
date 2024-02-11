@@ -1,0 +1,67 @@
+﻿@using Web_Music_v3.Models
+@model IEnumerable<Album>
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Web Music</title>
+    <link rel="stylesheet" href="~/css/Track/siteTrackList.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/Site/site.css" asp-append-version="true" />
+</head>
+
+<body>
+
+    <div>
+        <div class="container">
+            <div class="search__info">
+                <form style="display:flex">
+                    <div class="seach">
+                        <input name="search" asp-area="search" type="text" class="input__data__search" placeholder="Поиск" />
+                    </div>
+                    <input asp-controller="Album" asp-action="Search" type="submit" value="🔍" class="btn__search" />
+                </form>
+            </div>
+        </div>
+    </div>
+
+    @if(Model.Count() == 0)
+    {
+        <div class="track">
+            <div class="container">
+                <div class="track__list">
+                    <div class="track__item">Список пуст</div>                    
+                </div>
+            </div>
+        </div>
+    }
+    else
+    {
+        @foreach (var item in Model)
+        {
+            if(item.IsVisible == true)
+            {
+                <div class="track">
+                    <div class="container">
+                        <div class="track__list">
+                            <div class="track__item">@item.Title</div>
+                            <div class="track__item">@item.Author</div>
+                            <form>
+                                <input asp-for="@item.Id" type="hidden" name="albumId" />                                
+                                <div class="btn">
+                                    <input asp-controller="AlbumTrack" asp-action="List" type="submit" title="Просмотреть" value="▶" class="btn__edittrack" />
+                                    <input asp-controller="AlbumUser" asp-action="Add" type="submit" title="Добавить альбом к себе" value="+" class="btn__edittrack" />
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            }            
+        }
+    }
+
+</body>
+</html>
