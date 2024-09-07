@@ -155,7 +155,7 @@ namespace Web_Music_v3.Controllers
                     {
                         smtp.Connect("smtp.yandex.ru", 465, true);
 
-                        smtp.Authenticate("druian.oleg@yandex.ru", "Chudo62419352");
+                        smtp.Authenticate();
 
                         smtp.Send(_email);
                         smtp.Disconnect(true);
